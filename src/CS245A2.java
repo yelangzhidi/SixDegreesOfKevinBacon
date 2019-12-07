@@ -7,7 +7,9 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 
 public class CS245A2 {
+    static Graph graph = new Graph();
     public static void main(String[] args) {
+        readUserInput();
         readFile(args[0]);
     }
     public static String[] parseCast(String s) throws ParseException {
@@ -32,6 +34,33 @@ public class CS245A2 {
                 parseCast(row);
             }
         } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void readUserInput() {
+        try(BufferedReader userReader = new BufferedReader(new InputStreamReader(System.in))) {
+            boolean finished = false;
+            while(!finished){
+                System.out.print("Actor 1 name: ");
+                String actor1 = userReader.readLine();
+                while(!graph.inGraph(actor1.toLowerCase())) {
+                    System.out.println("No such actor.");
+                    System.out.print("Actor 1 name: ");
+                    actor1 = userReader.readLine();
+                }
+                System.out.print("Actor 2 name: ");
+                String actor2 = userReader.readLine();
+                while(!graph.inGraph(actor2.toLowerCase())) {
+                    System.out.println("No such actor.");
+                    System.out.print("Actor 2 name: ");
+                    actor2 = userReader.readLine();
+                }
+                System.out.format("Path between %s and %s: \n", actor1, actor2);
+                System.out.print("Continue? [Y/N] ");
+                if(userReader.readLine().equals("N"))
+                    finished = true;
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
