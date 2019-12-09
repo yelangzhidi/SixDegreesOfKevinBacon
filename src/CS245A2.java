@@ -8,20 +8,26 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- *
+ * main class
  */
 public class CS245A2 {
     private Graph graph = new TableGraph();
 
     /**
-     *
-     * @param args
+     * main function
+     * @param args csv file address
      */
     public static void main(String[] args) {
         CS245A2 cs245A2 = new CS245A2();
         cs245A2.readFile(args[0]);
         cs245A2.readUserInput();
     }
+
+    /**
+     * format a name to Capitalize first letter
+     * @param name String name
+     * @return formatted name
+     */
     public String formatName(String name) {
         String[] namearr = name.split(" ");
         String result = "";
@@ -31,17 +37,14 @@ public class CS245A2 {
     }
 
     /**
-     *
-     * @param input
-     * @return
+     * edit the text from csv line and format double quotes to quote
+     * @param input line from csv file have double quotes
+     * @return formatted line with normal quotes
      */
     private String formatDoubleQuotes(String input) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             char curr = input.charAt(i);
-            if (i == 0 || i == input.length()-1) {
-                continue;
-            }
             if (curr == '\"' && input.charAt(i+1) == '\"') {
                 if(input.charAt(i+2) == '\"' && input.charAt(i+3) == '\"')
                     sb.append(curr);
@@ -53,9 +56,9 @@ public class CS245A2 {
     }
 
     /**
-     *
-     * @param s
-     * @return
+     * parse the json to String[]
+     * @param s json line
+     * @return String[] with actors names
      * @throws ParseException
      */
     private String[] parseCast(String s) throws ParseException {
@@ -64,7 +67,7 @@ public class CS245A2 {
         if(jsonstrings.contains("[]"))
             return null;
         String casts = jsonstrings.split("\\[\\{")[1];
-        String formatCasts = formatDoubleQuotes("\"[{" + casts.substring(0, casts.length()-2));
+        String formatCasts = formatDoubleQuotes("[{" + casts.substring(0, casts.length()-3));
 
         JSONParser parser = new JSONParser();
         JSONArray jsonArray = (JSONArray) parser.parse(formatCasts);
@@ -77,8 +80,8 @@ public class CS245A2 {
     }
 
     /**
-     *
-     * @param filename
+     * read the csv file
+     * @param filename csv file path
      */
     private void readFile(String filename) {
         try (BufferedReader csvReader = new BufferedReader(new FileReader(filename))) {
@@ -94,7 +97,7 @@ public class CS245A2 {
     }
 
     /**
-     *
+     * read UserInput and run the whole program
      */
     private void readUserInput() {
         try(BufferedReader userReader = new BufferedReader(new InputStreamReader(System.in))) {

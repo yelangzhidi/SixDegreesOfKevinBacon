@@ -14,17 +14,17 @@ public class TableGraph implements Graph{
     }
 
     /**
-     *
-     * @param actor
-     * @return
+     * Is the actor name in the Graph.
+     * @param actor String actor name
+     * @return boolean if the actor in Graph
      */
     public boolean inGraph(String actor) {
         return adj.containsKey(actor);
     }
 
     /**
-     *
-     * @param actors
+     * add actors in a film to the graph
+     * @param actors String[] actors in the film
      */
     public void addEdges(String[] actors) {
         for(String actor: actors) {
@@ -44,11 +44,11 @@ public class TableGraph implements Graph{
     }
 
     /**
-     *
-     * @param src
-     * @param dest
-     * @return
-     * @throws Exception
+     * find the shortest route between a pair of actors
+     * @param src the start actor
+     * @param dest the end actor
+     * @return the route between a pair of actors
+     * @throws Exception actors not in Graph
      */
     public ArrayList<String> findShortestRoute(String src, String dest) throws Exception {
         ArrayList<String> result = new ArrayList<String>();
